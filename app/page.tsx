@@ -31,8 +31,21 @@ export default function Home() {
     }
   }, [])
 
+  // Auto-sync from Google Sheets on every page load, then load tasks
   useEffect(() => {
-    loadTasks()
+    const init = async () => {
+      setSyncing(true)
+      try {
+        await fetch('/api/sync', { method: 'POST' })
+        setLastSync(new Date().toISOString())
+      } catch {
+        // silent fail — still show whatever is in the DB
+      } finally {
+        setSyncing(false)
+      }
+      await loadTasks()
+    }
+    init()
   }, [loadTasks])
 
   const syncNow = async () => {

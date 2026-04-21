@@ -10,11 +10,11 @@ export interface SheetRow {
 }
 
 export async function fetchSheetData(): Promise<SheetRow[]> {
-  const sheetId = process.env.GOOGLE_SHEET_ID
+  const sheetId = process.env.NEXT_PUBLIC_GOOGLE_SHEET_ID
   const apiKey = process.env.GOOGLE_SHEETS_API_KEY
 
   if (!sheetId || !apiKey) {
-    throw new Error('GOOGLE_SHEET_ID and GOOGLE_SHEETS_API_KEY must be set')
+    throw new Error('NEXT_PUBLIC_GOOGLE_SHEET_ID and GOOGLE_SHEETS_API_KEY must be set')
   }
 
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A:G?key=${apiKey}`
